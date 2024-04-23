@@ -6,8 +6,7 @@ namespace Migrations.Entities
     internal class Library
     {
         [Key] public int ID { get; set; }
-        [Required] public string Name { get; set; }
-        public List<Book>Books { get; set; }
-
+        [Required][StringLength(255)] public string ?Name { get; set; }
+        public List<Book> ?BookList { get; set; }
     }
 }
