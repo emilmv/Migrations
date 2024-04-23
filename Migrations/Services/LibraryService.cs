@@ -8,9 +8,10 @@ namespace Migrations.Services
         public void Add(Library library) //Create
         {
             using var dc = new AppDbContext();
-            var exists = dc.Libraries.FirstOrDefault(l => l.Name.Equals(library.Name, StringComparison.OrdinalIgnoreCase));
+            var exists = dc.Libraries.FirstOrDefault(l => l.Name.Equals(library.Name));
             if (exists != null) return;
             dc.Libraries.Add(library);
+            dc.SaveChanges();
         }
         public List<Library> GetAll() //Read
         {
@@ -25,14 +26,16 @@ namespace Migrations.Services
         public void Update(string previousName, string newName) //Update
         {
             using var dc = new AppDbContext();
-            var exists = dc.Libraries.FirstOrDefault(l => l.Name.Equals(previousName, StringComparison.OrdinalIgnoreCase));
+            var exists = dc.Libraries.FirstOrDefault(l => l.Name.Equals(previousName));
             if (exists != null) exists.Name = newName;
+            dc.SaveChanges();
         }
         public void Delete(int id) //Delete
         {
             using var dc = new AppDbContext();
             var exists = dc.Libraries.FirstOrDefault(l => l.ID == id);
             if (exists != null) dc.Libraries.Remove(exists);
+            dc.SaveChanges();
         }
     }
 }

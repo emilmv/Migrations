@@ -8,9 +8,10 @@ namespace Migrations.Services
         public void Add(Book book) //Create
         {
             using var dc = new AppDbContext();
-            var exists = dc.Books.FirstOrDefault(b => b.Name.Equals(book.Name, StringComparison.OrdinalIgnoreCase));
+            var exists = dc.Books.FirstOrDefault(b => b.Name.Equals(book.Name));
             if (exists != null) return;
             dc.Books.Add(book);
+            dc.SaveChanges();
         }
         public List<Book> GetAll() //Read
         {
@@ -27,12 +28,14 @@ namespace Migrations.Services
             using var dc = new AppDbContext();
             var exists = dc.Books.FirstOrDefault(b => b.ID==id);
             if (exists != null) exists.Price = newPrice;
+            dc.SaveChanges();
         }
         public void Delete(int id) //Delete
         {
             using var dc = new AppDbContext();
             var exists = dc.Books.FirstOrDefault(b => b.ID == id);
             if (exists != null) dc.Books.Remove(exists);
+            dc.SaveChanges();
         }
     }
 }

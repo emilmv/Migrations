@@ -10,5 +10,6 @@ namespace Migrations.Entities
         [Required] public string Name { get; set; }
         [Required] public decimal Price { get; set; }
         [ForeignKey(nameof(Library))] public int LibraryID { get; set; }
+        public Library Library { get; set; }
     }
 }
